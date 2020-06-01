@@ -7,7 +7,7 @@ import com.ssafy.happyhouse.dto.MemberDto;
 
 public interface LoginDao {
 
-	public int login(String userid, String userpwd) throws SQLException;
+	public MemberDto login(String userid, String userpwd) throws SQLException;
 
 	public MemberDto findpwd(String userid, String username, String email) throws SQLException;
 

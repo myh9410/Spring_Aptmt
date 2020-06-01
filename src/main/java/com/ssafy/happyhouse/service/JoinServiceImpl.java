@@ -1,11 +1,16 @@
 package com.ssafy.happyhouse.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.ssafy.happyhouse.dao.JoinDao;
 import com.ssafy.happyhouse.dao.JoinDaoImpl;
 import com.ssafy.happyhouse.dto.MemberDto;
 
+@Service
 public class JoinServiceImpl implements JoinService {
-
+	
+	@Autowired
 	JoinDao joinDao;
 	
 	public JoinServiceImpl() {

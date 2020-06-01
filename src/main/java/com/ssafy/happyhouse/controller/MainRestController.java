@@ -14,13 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -42,9 +38,22 @@ public class MainRestController {
 	HouseService houseService;
 	@Autowired
 	HouseLocService houseLocService;
+	@Autowired
+	FindMemService findMemService;
+	@Autowired
+	LoginService loginService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView home() {
+		return new ModelAndView("index");
+	}
+	
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public ModelAndView login(@RequestParam String userid, @RequestParam String userpwd, HttpServletRequest request) throws Exception {
+		HttpSession session = request.getSession();
+		MemberDto m = loginService.login(userid, userpwd);
+		System.out.println(m.toString());
+		session.setAttribute("userinfo", m);
 		return new ModelAndView("index");
 	}
 	
@@ -74,12 +83,14 @@ public class MainRestController {
 		return findMemService.find(userid, userpwd);
 	} // 전체 회원 조회
 	
-	@PutMapping("/")
-	public String modify(@RequestBody MemberDto memberdto, String originalid) throws Exception {
-		if(joinService.update(memberdto, originalid)==1) return "success";
-		else return "fail";
-	}
-	
+	@RequestMapping(value = "/find", method=RequestMethod.GET)
+	public ModelAndView searchMember(@RequestParam String key, @RequestParam String value, Model model) throws Exception{
+		List<MemberDto> list = findMemService.find(key, value);
+		model.addAttribute("users", list);
+		ModelAndView mav = new ModelAndView("user/searchmember");
+		return mav;
+	} 
+
 	@DeleteMapping("/{userpwd}")
 	public String deleteInfo(@PathVariable("userpwd") String userpwd) throws Exception {
 		if(loginService.deleteInfo(userpwd)==1)return "success";

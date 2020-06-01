@@ -1,36 +1,28 @@
 package com.ssafy.happyhouse.dao;
 
 import java.sql.SQLException;
-<<<<<<< HEAD
 import java.util.HashMap;
 import java.util.Map;
-=======
 import java.util.List;
->>>>>>> 77c6840484ef10c29c2b1c9de3ec29ae22f52862
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.ssafy.happyhouse.dto.MemberDto;
 
-
-
+@Repository
 public class LoginDaoImpl implements LoginDao {
 
 	@Autowired
 	SqlSession sqlSession;
 	
 	@Override
-	public int login(String userid, String userpwd) throws SQLException {
-<<<<<<< HEAD
+	public MemberDto login(String userid, String userpwd) throws SQLException {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("userid", userid);
 		map.put("userpwd", userpwd);
-		int loginCnt= sqlSession.selectOne("query.login", map);
-=======
-		int loginCnt= sqlSession.selectOne("query.login", userid);
->>>>>>> 77c6840484ef10c29c2b1c9de3ec29ae22f52862
-		return loginCnt;
+		return sqlSession.selectOne("query.login", map);
 	}
 
 	@Override
@@ -43,10 +35,4 @@ public class LoginDaoImpl implements LoginDao {
 		return sqlSession.delete("query.deleteInfo",userpwd);
 		
 	}
-<<<<<<< HEAD
 }
-=======
-
-	
-}
->>>>>>> 77c6840484ef10c29c2b1c9de3ec29ae22f52862

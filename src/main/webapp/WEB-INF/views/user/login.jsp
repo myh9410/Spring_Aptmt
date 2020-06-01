@@ -9,24 +9,31 @@
 <script type="text/javascript">
 function login() {
 	if(document.getElementById("userid").value == "") {
-		alert("아이디 입력!!!");
-		return;
+	    alert("아이디 입력!!!");
+	    return;
 	} else if(document.getElementById("userpwd").value == "") {
 		alert("비밀번호 입력!!!");
-		return;
+	    return;
 	} else {
-		document.getElementById("loginform").action = "${root}/main.do?act=login";
-		//<input type="hidden" name="act" value="login">아래의 아이디, 비밀번호 등의 값들을 넘겨줌
-		document.getElementById("loginform").submit();
+	    var userid = $("#loginform input[name=userid]").val();
+	    var userpwd = $("#loginform input[name=userpwd]").val();   
+	    $.ajax({
+	    	type:'GET',
+	        url:'${root}/login?userid='+userid+'&userpwd='+userpwd,
+	        success:function(data){
+	        	alert($("#loginform input[name=userid]").val()+ " 로그인 성공!");
+	            window.location.href="${root}/";
+	         }
+	    });
 	}
 }
 	 
 function moveJoin() {
-	document.location.href = "${root}/main.do?act=mvjoin";
+	document.location.href = "${root}/mvjoin";
 }
 
 function mvfindpwd() {
-	document.location.href = "${root}/main.do?act=mvfindpwd";
+	document.location.href = "${root}/mvfindpwd";
 }
 </script>
 </head>
@@ -34,8 +41,8 @@ function mvfindpwd() {
 <div id="menu-wrapper">
       <div id="menu">
          <ul>
-            <li class="current_page_item"><a href="${root}/index.jsp" accesskey="1" title="">HomePage</a></li>
-            <li><a href="${root}/main.do?act=mvsearchmember" accesskey="2" title="">회원정보검색</a></li>
+            <li class="current_page_item"><a href="${root}/" accesskey="1" title="">HomePage</a></li>
+            <li><a href="${root}/find?key=&value=" accesskey="4" title="">회원정보검색</a></li>
             <li><a href="${root}/aptlist?pg=1&key=&word=" accesskey="5" title="">전체아파트목록</a></li>
          </ul>
       </div>

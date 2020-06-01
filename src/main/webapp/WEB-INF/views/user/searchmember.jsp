@@ -52,7 +52,7 @@
       <div id="menu">
          <ul>
             <li class="current_page_item"><a href="${root}/index.jsp" accesskey="1" title="">HomePage</a></li>
-            <li><a href="${root}/main.do?act=mvsearchmember" accesskey="4" title="">회원정보검색</a></li>
+           <li><a href="${root}/find?key=&value=" accesskey="4" title="">회원정보검색</a></li>
             <li><a href="${root}/main.do?act=aptlist&pg=1&key=&word=" accesskey="5" title="">전체아파트목록</a></li>
          </ul>
       </div>

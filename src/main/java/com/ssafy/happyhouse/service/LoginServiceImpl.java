@@ -1,12 +1,17 @@
 package com.ssafy.happyhouse.service;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.ssafy.happyhouse.dao.LoginDao;
 import com.ssafy.happyhouse.dao.LoginDaoImpl;
 import com.ssafy.happyhouse.dto.MemberDto;
 
+@Service
 public class LoginServiceImpl implements LoginService {
-
+	
+	@Autowired
 	LoginDao loginDao;
 	
 	public LoginServiceImpl() {
@@ -14,7 +19,7 @@ public class LoginServiceImpl implements LoginService {
 	}
 	
 	@Override
-	public int login(String userid, String userpwd) throws Exception {
+	public MemberDto login(String userid, String userpwd) throws Exception {
 		if (userid == null || userpwd == null)
 			throw new Exception();
 		return loginDao.login(userid, userpwd);
