@@ -1,6 +1,8 @@
 package com.ssafy.happyhouse.dao;
 
 
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ssafy.happyhouse.dto.MemberDto;
@@ -8,16 +10,17 @@ import com.ssafy.happyhouse.dto.MemberDto;
 @Repository
 public class JoinDaoImpl implements JoinDao {
 
+	@Autowired
+	private SqlSession sqlSession;
+	
 	@Override
-	public MemberDto join(MemberDto memberDto) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public int join(MemberDto memberDto) throws Exception {
+		return sqlSession.insert("query.join",memberDto);
 	}
 
 	@Override
-	public MemberDto update(MemberDto memberDto, String originalid) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public int update(MemberDto memberDto, String originalid) throws Exception {
+		return sqlSession.update("query.update",memberDto);
+	} 
 
 }

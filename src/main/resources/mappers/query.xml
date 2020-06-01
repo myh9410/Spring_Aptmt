@@ -3,7 +3,90 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="query"> <!-- mybatis는 namespace필수!! -->
-
+	<select id="listAptmt" parameterType="com.ssafy.happyhouse.dto.AptInfoPasser" resultType="com.ssafy.happyhouse.dto.HouseDeal">
+    	select * from housedealforaptdeal 
+    	<if test="word != null">
+    		<choose>
+    			<when test="key == 'dong'">
+    				where dong like CONCAT('%',#{word},'%') 
+    			</when>
+    			<when test="key == 'AptName'">
+    				where AptName like CONCAT('%',#{word},'%')  
+    			</when>
+    			<otherwise>
+    				where #{key} = #{word}
+    			</otherwise>
+    		</choose>
+    		order by no asc limit #{currentPage}, #{sizePerPage}
+    	</if>
+    </select>
+    
+    <select id="totalCount" parameterType="hashMap" resultType="int">
+    	select count(no) from housedealforaptdeal 
+    	<if test="word != null">
+    		<choose>
+    			<when test="key == 'dong'">
+    				where dong like CONCAT('%',#{word},'%') 
+    			</when>
+    			<when test="key == 'AptName'">
+    				where AptName like CONCAT('%',#{word},'%')  
+    			</when>
+    			<otherwise>
+    				where #{key} = #{word}
+    			</otherwise>
+    		</choose>
+    	</if>
+    </select>
+    
+    <select id="listAptLoc" parameterType="hashMap" resultType="com.ssafy.happyhouse.dto.HouseLoc">
+    	select lat,lng from houseinfo 
+    	<if test="word != null">
+    		<choose>
+    			<when test="key == 'dong'">
+    				where dong like CONCAT('%',#{word},'%') 
+    			</when>
+    			<when test="key == 'AptName'">
+    				where AptName like CONCAT('%',#{word},'%') 
+    			</when>
+    			<otherwise>
+    				where #{key} = #{word}
+    			</otherwise>
+    		</choose>
+    	</if>
+    </select>
+    
+    <insert id="join">
+		insert into ssafy_member(userid,username,userpwd,email,address)
+	         values (userid=#{userid},username=#{username},userpwd=#{userpwd},email=#{email},address=#{address})
+	</insert>
+    
+    <update id="update">
+		update ssafy_member set
+	         userid= #{userid}, username= #{username}, userpwd= #{userpwd}, email= #{email}, address= #{address} 
+	         where userid = #{userid}
+	</update>
+	
+	<select id="login" parameterType="hashMap" resultType="int">
+		select username, userid, email,userpwd,address 
+				from ssafy_member
+				where userid = #{userid} and userpwd = #{userpwd}
+	</select>
+	
+	<select id="findpwd">
+		select userpwd 
+				from ssafy_member
+				where userid = #{userid} and username = #{username} and email =#{email}
+	</select>
+	
+	<delete id="deleteInfo">
+		delete from ssafy_member where userpwd =#{userpwd}
+	</delete>
+	
+	<select id="find">
+		select userid,username,email 
+				from ssafy_member
+				order by joindate desc 
+	</select>
 </mapper>
 
 

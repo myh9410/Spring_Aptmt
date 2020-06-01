@@ -25,7 +25,7 @@
 
 		<script type="text/javascript">
 		function goback() {
-			location.href="${root}/index.jsp";
+			location.href="${root}/";
 		}
 		function searchmember(){
 			if(document.getElementById("value").value == "") {

@@ -10,7 +10,7 @@
 		<title>SSAFY-아파트 목록</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"/>
 		<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" />
 		<link href="css/default.css" rel="stylesheet" type="text/css" media="all" />
 		<link href="css/fonts.css" rel="stylesheet" type="text/css" media="all" />
@@ -20,22 +20,23 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 		<script>
 		function goback() {
-			location.href="${root}/index.jsp";
+			location.href="${root}/index";
 		}
 		function movewrite() {
 			location.href="${root}/main.do?act=mvwrite";
 		}
-		function goback() {
-			location.href="${root}/index.jsp";
-		}
-		function searchArticle() {
-			document.getElementById("pg").value=pg;
-			document.getElementById("searchform").action = "${root}/main.do";
+		function searchApt() {
+			var pg = document.getElementById("pg").value;
+			var key = document.getElementById("key").value;
+			var word = document.getElementById("word").value;
+			document.getElementById("searchform").action = "${root}/api/aptlist?pg="+pg+"&key="+key+"&word="+word;
 			document.getElementById("searchform").submit();
 		}
-		function pageMove(pg) { 
+		function pageMove(pg) {
 			document.getElementById("pg").value=pg;
-			document.getElementById("pageform").action = "${root}/main.do";
+			var key = document.getElementById("key").value;
+			var word = document.getElementById("word").value;
+			document.getElementById("pageform").action = "${root}/aptlist?pg="+pg+"&key="+key+"&word="+word;
 			document.getElementById("pageform").submit();
 		}
 		</script>
@@ -45,7 +46,7 @@
    <div id="header" class="container">
       <div id="logo">
          <span class="icon icon-home"></span>
-         <h1><a href="${root}/list.jsp">HappyHouse - 아파트 조회</a></h1>
+         <h1><a href="${root}/aptlist?pg=1&key=&word">HappyHouse - 아파트 조회</a></h1>
          
       </div>
       <div id="triangle-up"></div>
@@ -55,10 +56,12 @@
       <div id="menu">
          <ul>
             <li class="current_page_item"><a href="${root}/index.jsp" accesskey="1" title="">HomePage</a></li>
+            <c:if test="${userinfo != null}">
             <li><a href="${root}/main.do?act=logout" accesskey="2" title="">로그아웃</a></li>
+            </c:if>
             <li><a href="${root}/main.do?act=mvmodify" accesskey="3" title="">회원정보수정</a></li>
             <li><a href="${root}/main.do?act=mvsearchmember" accesskey="4" title="">회원정보검색</a></li>
-            <li><a href="${root}/main.do?act=aptlist&pg=1&key=&word=" accesskey="5" title="">전체아파트목록</a></li>
+            <li><a href="${root}/aptlist?pg=1&key=&word=" accesskey="5" title="">전체아파트목록</a></li>
          </ul>
 	</div>
 </div>	
@@ -92,7 +95,7 @@
 							<option value="AptName">아파트 이름</option>
 						</select> 
 						 <input type="text" class="form-control" placeholder="검색어 입력" name="word" id="word">
-			 			 <button type="button" class="btn btn-primary" onclick="javascript:searchArticle();">검색</button>
+			 			 <button type="button" class="btn btn-primary" onclick="javascript:searchApt();">검색</button>
 						</td>
 					</tr>
 				</table>

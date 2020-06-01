@@ -1,10 +1,6 @@
 package com.ssafy.happyhouse.dto;
 
 public class HouseDeal implements Comparable<HouseDeal>{
-	private String APT_DEAL;
-	private String APT_RENT;
-	private String HOUSE_DEAL;
-	private String HOUSE_RENT;
 	private int no;
 	private String dong;
 	private String AptName;
@@ -16,13 +12,28 @@ public class HouseDeal implements Comparable<HouseDeal>{
 	private int dealDay;
 	private double area;
 	private int floor;
-	private String lat;
-	private String lng;
 	private String jibun;
 	private String type;
 	private String rentMoney;
-	private String img;
+	private double lat;
+	private double lng;
 	
+	public double getLat() {
+		return lat;
+	}
+
+	public void setLat(double lat) {
+		this.lat = lat;
+	}
+
+	public double getLng() {
+		return lng;
+	}
+
+	public void setLng(double lng) {
+		this.lng = lng;
+	}
+
 	public HouseDeal() {}
 	
 	public HouseDeal(int no) {
@@ -33,38 +44,6 @@ public class HouseDeal implements Comparable<HouseDeal>{
 	public int compareTo(HouseDeal o) {
 		// TODO Auto-generated method stub
 		return 0;
-	}
-
-	public String getAPT_DEAL() {
-		return APT_DEAL;
-	}
-
-	public void setAPT_DEAL(String aPT_DEAL) {
-		APT_DEAL = aPT_DEAL;
-	}
-
-	public String getAPT_RENT() {
-		return APT_RENT;
-	}
-
-	public void setAPT_RENT(String aPT_RENT) {
-		APT_RENT = aPT_RENT;
-	}
-
-	public String getHOUSE_DEAL() {
-		return HOUSE_DEAL;
-	}
-
-	public void setHOUSE_DEAL(String hOUSE_DEAL) {
-		HOUSE_DEAL = hOUSE_DEAL;
-	}
-
-	public String getHOUSE_RENT() {
-		return HOUSE_RENT;
-	}
-
-	public void setHOUSE_RENT(String hOUSE_RENT) {
-		HOUSE_RENT = hOUSE_RENT;
 	}
 
 	public int getNo() {
@@ -155,22 +134,6 @@ public class HouseDeal implements Comparable<HouseDeal>{
 		this.floor = floor;
 	}
 
-	public String getLat() {
-		return lat;
-	}
-
-	public void setLat(String lat) {
-		this.lat = lat;
-	}
-
-	public String getLng() {
-		return lng;
-	}
-
-	public void setLng(String lng) {
-		this.lng = lng;
-	}
-
 	public String getJibun() {
 		return jibun;
 	}
@@ -195,24 +158,12 @@ public class HouseDeal implements Comparable<HouseDeal>{
 		this.rentMoney = rentMoney;
 	}
 
-	public String getImg() {
-		return img;
-	}
-
-	public void setImg(String img) {
-		this.img = img;
-	}
-
 	@Override
 	public String toString() {
-		return "HouseDeal [APT_DEAL=" + APT_DEAL + ", APT_RENT=" + APT_RENT + ", HOUSE_DEAL=" + HOUSE_DEAL
-				+ ", HOUSE_RENT=" + HOUSE_RENT + ", no=" + no + ", dong=" + dong + ", AptName=" + AptName + ", code="
-				+ code + ", dealAmount=" + dealAmount + ", buildYear=" + buildYear + ", dealYear=" + dealYear
-				+ ", dealMonth=" + dealMonth + ", dealDay=" + dealDay + ", area=" + area + ", floor=" + floor + ", lat="
-				+ lat + ", lng=" + lng + ", jibun=" + jibun + ", type=" + type + ", rentMoney=" + rentMoney + ", img="
-				+ img + "]";
+		return "HouseDeal [no=" + no + ", dong=" + dong + ", AptName=" + AptName + ", code=" + code + ", dealAmount="
+				+ dealAmount + ", buildYear=" + buildYear + ", dealYear=" + dealYear + ", dealMonth=" + dealMonth
+				+ ", dealDay=" + dealDay + ", area=" + area + ", floor=" + floor + ", jibun=" + jibun + ", type=" + type
+				+ ", rentMoney=" + rentMoney + "]";
 	}
-	
-	
 	
 }

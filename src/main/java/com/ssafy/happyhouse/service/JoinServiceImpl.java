@@ -13,13 +13,13 @@ public class JoinServiceImpl implements JoinService {
 	}
 	
 	@Override
-	public MemberDto join(MemberDto memberDto) throws Exception {
+	public int join(MemberDto memberDto) throws Exception {
 		if (memberDto.getUserid() == "" || memberDto.getUsername() =="") throw new Exception();
 		return joinDao.join(memberDto);
 	}
 
 	@Override
-	public MemberDto update(MemberDto memberDto, String originalid) throws Exception {
+	public int update(MemberDto memberDto, String originalid) throws Exception {
 		if (memberDto.getUserid() == "" || memberDto.getUsername() =="") throw new Exception();
 		return joinDao.update(memberDto,originalid);
 	}

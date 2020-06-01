@@ -2,25 +2,25 @@ package com.ssafy.happyhouse.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import com.ssafy.happyhouse.dao.HouseDao;
 import com.ssafy.happyhouse.dao.HouseDaoImpl;
 import com.ssafy.happyhouse.dto.HouseDeal;
 import com.ssafy.happyhouse.util.PageNavigation;
 
+@Repository
 public class HouseServiceImpl implements HouseService {
-
+	
+	@Autowired
 	private HouseDao dao;
 	
-	public HouseServiceImpl() {
-		dao = new HouseDaoImpl();
-	}
-
 	@Override
 	public HouseDeal search(int no) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 	@Override
 	public List<HouseDeal> listAptmt(int currentPage, int sizePerPage, String key, String word) throws Exception {

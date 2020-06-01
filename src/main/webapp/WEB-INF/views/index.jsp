@@ -12,7 +12,7 @@
 <meta name="keywords" content="" />
 <meta name="description" content="" />
 
-<link rel="stylesheet type="text/css" href="css/index.css"/>
+<link rel="stylesheet" type="text/css" href="css/index.css"/>
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" />
 <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" />
 <link href="css/default.css" rel="stylesheet" type="text/css" media="all" />
@@ -24,7 +24,7 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b80b37a7379bee362585cf8b7603b61a"></script>
 <script>
 	function deleteIn() {
-		location.href="${root}/user/deleteInfo.jsp";
+		location.href="${root}/user/deleteInfo";
 	}
 
 </script>
@@ -33,8 +33,8 @@
 <div id="header-wrapper">
    <div id="header" class="container">
       <div id="logo">
-         <span class="icon icon-home"></span>
-         <h1><a href="${root}/index.jsp">HappyHouse</a></h1>
+         <i class="icon-home"></i>
+         <h1><a href="${root}/">HappyHouse</a></h1>
          
       </div>
       <div id="triangle-up"></div>
@@ -44,7 +44,7 @@
 <div align="center">
 	<c:if test="${userinfo eq null}"> <!-- if (memberDto == null) -->
       <h3>${msg}</h3>
-      <%@ include file="/user/login.jsp" %>
+      <%@ include file="/WEB-INF/views/user/login.jsp" %>
 	</c:if> <!-- if문 종료 -->
 	<c:if test="${userinfo != null}"> <!-- else문이 없으므로 조건 적어줘야됨 -->
 	<!-- 로그인 여부는 session을 이용하여 판단 -->
@@ -52,10 +52,10 @@
       <div id="menu">
          <ul>
             <li class="current_page_item"><a href="${root}/index.jsp" accesskey="1" title="">HomePage</a></li>
-            <li><a href="${root}/main.do?act=logout" accesskey="2" title="">로그아웃</a></li>
+            <li><a href="${root}/logout" accesskey="2" title="">로그아웃</a></li>
             <li><a href="${root}/main.do?act=mvmodify" accesskey="3" title="">회원정보수정</a></li>
             <li><a href="${root}/main.do?act=mvsearchmember" accesskey="4" title="">회원정보검색</a></li>
-            <li><a href="${root}/main.do?act=aptlist&pg=1&key=&word=" accesskey="5" title="">전체아파트목록</a></li>
+            <li><a href="${root}/aptlist?pg=1&key=&word=" accesskey="5" title="">전체아파트목록</a></li>
          </ul>
       </div>
 	</div>
@@ -72,7 +72,7 @@
 		  		</tr>
 	  		</table>
 	<div id="stamp" class="container">
-		<div class="hexagon"><span class="icon icon-home"></span></div>
+		<div class="hexagon"><i class="icon-home"></i></div>
 	</div>
 	<div id="copyright" class="container"></div>
 
