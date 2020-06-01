@@ -4,7 +4,46 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="query"> <!-- mybatis는 namespace필수!! -->
 
+
+	<insert id="join">
+		insert into ssafy_member(userid,username,userpwd,email,address)
+	         values (userid=#{userid},username=#{username},userpwd=#{userpwd},email=#{email},address=#{address})
+	</insert>
+	
+	
+	<update id="update">
+		update ssafy_member set
+	         userid= #{userid}, username= #{username}, userpwd= #{userpwd}, email= #{email}, address= #{address} 
+	         where userid = #{userid}
+	</update>
+	
+	
+	<select id="login">
+		select username, userid, email,userpwd,address 
+				from ssafy_member
+				where userid = #{userid} and userpwd = #{userpwd}
+	</select>
+	
+	
+	<select id="findpwd">
+		select userpwd 
+				from ssafy_member
+				where userid = #{userid} and username = #{username} and email =#{email}
+	</select>
+	
+	
+	<delete id="deleteInfo">
+		delete from ssafy_member where userpwd =#{userpwd}
+	</delete>
+	
+	
+	<select id="find">
+		select userid,username,email 
+				from ssafy_member
+				order by joindate desc 
+	</select>
+	
+	
+
+
 </mapper>
-
-
-
