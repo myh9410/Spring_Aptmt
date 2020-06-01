@@ -1,6 +1,5 @@
 package com.ssafy.happyhouse.service;
 
-import javax.security.sasl.SaslException;
 
 import com.ssafy.happyhouse.dao.LoginDao;
 import com.ssafy.happyhouse.dao.LoginDaoImpl;
