@@ -55,16 +55,21 @@
     	</if>
     </select>
     
-    <insert id="join">
-		insert into ssafy_member(userid,username,userpwd,email,address)
-	         values (userid=#{userid},username=#{username},userpwd=#{userpwd},email=#{email},address=#{address})
-	</insert>
+    <delete id="deleteInfo">
+    	delete from ssafy_member where userpwd = #{userpwd}
+    </delete>
     
-    <update id="update">
-		update ssafy_member set
-	         userid= #{userid}, username= #{username}, userpwd= #{userpwd}, email= #{email}, address= #{address} 
-	         where userid = #{userid}
-	</update>
+    
+   <insert id="join" parameterType="com.ssafy.happyhouse.dto.MemberDto">
+      insert into ssafy_member(userid,username,userpwd,email,address)
+            values (#{userid},#{username},#{userpwd},#{email},#{address})
+   </insert>
+    
+    <update id="update" parameterType="com.ssafy.happyhouse.dto.MemberDto">
+	    update ssafy_member set userid= #{userid}, username= #{username}, userpwd= #{userpwd}, email= #{email}, address= #{address} 
+	    where userid = #{userid}
+    </update>
+
 	
 	<select id="login" parameterType="hashMap" resultType="com.ssafy.happyhouse.dto.MemberDto">
 		select username, userid, email,userpwd,address 
@@ -72,15 +77,9 @@
 				where userid = #{userid} and userpwd = #{userpwd}
 	</select>
 	
-	<select id="findpwd">
-		select userpwd 
-				from ssafy_member
-				where userid = #{userid} and username = #{username} and email =#{email}
+	<select id="findpwd" parameterType="com.ssafy.happyhouse.dto.MemberDto" resultType="com.ssafy.happyhouse.dto.MemberDto">
+		select * from ssafy_member where userid = #{userid} and username = #{username} and email = #{email}
 	</select>
-	
-	<delete id="deleteInfo">
-		delete from ssafy_member where userpwd =#{userpwd}
-	</delete>
 	
 	<select id="find" parameterType="hashMap" resultType="com.ssafy.happyhouse.dto.MemberDto">
     		select userid,username,email 

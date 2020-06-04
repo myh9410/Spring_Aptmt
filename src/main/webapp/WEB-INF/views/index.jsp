@@ -24,7 +24,7 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b80b37a7379bee362585cf8b7603b61a"></script>
 <script>
 	function deleteIn() {
-		location.href="${root}/user/deleteInfo";
+		location.href="${root}/mvdeleteInfo";
 	}
 
 </script>
@@ -53,7 +53,7 @@
          <ul>
             <li class="current_page_item"><a href="${root}/index.jsp" accesskey="1" title="">HomePage</a></li>
             <li><a href="${root}/logout" accesskey="2" title="">로그아웃</a></li>
-            <li><a href="${root}/main.do?act=mvmodify" accesskey="3" title="">회원정보수정</a></li>
+             <li><a href="${root}/update" accesskey="3" title="">회원정보수정</a></li>
             <li><a href="${root}/find?key=&value=" accesskey="4" title="">회원정보검색</a></li>
             <li><a href="${root}/aptlist?pg=1&key=&word=" accesskey="5" title="">전체아파트목록</a></li>
          </ul>

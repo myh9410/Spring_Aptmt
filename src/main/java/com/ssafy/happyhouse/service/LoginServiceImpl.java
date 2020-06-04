@@ -26,9 +26,9 @@ public class LoginServiceImpl implements LoginService {
 	}
 
 	@Override
-	public MemberDto findpwd(String userid, String username, String email) throws Exception {
-		if (userid == null || username == null || email == null) throw new Exception();
-		return loginDao.findpwd(userid,username,email);
+	public MemberDto findpwd(MemberDto memberDto) throws Exception {
+		if (memberDto.getUserid() == null || memberDto.getUsername() == null || memberDto.getEmail() == null) throw new Exception();
+		return loginDao.findpwd(memberDto);
 	}
 	
 	@Override

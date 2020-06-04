@@ -13,35 +13,32 @@
 
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" />
 <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" />
-<link href="../css/default.css" rel="stylesheet" type="text/css" media="all" />
-<link href="../css/fonts.css" rel="stylesheet" type="text/css" media="all" />
+<link href="css/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="css/fonts.css" rel="stylesheet" type="text/css" media="all" />
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 <script type="text/javascript">
-$(document).ready(function() {
-	$("#registerBtn").click(function() {
-		if($("#username").val() == "") {
-			alert("이름 입력!!!");
-			return;
-		} else if($("#userid").val() == "") {
-			alert("아이디 입력!!!");
-			return;
-		} else if($("#emailid").val() == "") {
-			alert("이메일 입력!!!");
-			return;
-		} else if($("#emaildomain").val() == "") {
-			alert("이메일 확인!!!");
-			return;
-		} else {
-			$("#memberform").attr("action", "${root}/main.do?act=findpwd").submit();
-		}
-	});
-});
-
 function findpwd() {
-	document.location.href = "${root}/main.do?act=findpwd";
+	var email = $("#memberform input[name=emailid]").val()+"@"+$("#memberform select[name=emaildomain]").val();
+	$.ajax({
+    	type:'POST',
+        url:'${root}/findpwd',
+        headers:{"Content-Type":"application/json"},
+		data: JSON.stringify({	
+			username: $("#memberform input[name=username]").val(),
+			userid: $("#memberform input[name=userid]").val(),				  
+			email: email
+		}),
+        success:function(data){
+            window.location.href="${root}/findpwdsuccess";
+        },
+        error:function(data){
+        	alert("비밀번호 못찾음!");
+	        window.location.href="${root}/";
+	    }
+    });
 }
 </script>
 </head>
@@ -50,7 +47,7 @@ function findpwd() {
    <div id="header" class="container">
       <div id="logo">
          <span class="icon icon-home"></span>
-         <h1><a href="${root}/user/findpwd.jsp">HappyHouse - 비밀번호 찾기</a></h1>
+         <h1><a href="${root}/user/findpwd">HappyHouse - 비밀번호 찾기</a></h1>
          
       </div>
       <div id="triangle-up"></div>
@@ -59,9 +56,9 @@ function findpwd() {
 <div id="menu-wrapper">
       <div id="menu">
          <ul>
-            <li class="current_page_item"><a href="${root}/index.jsp" accesskey="1" title="">HomePage</a></li>
-            <li><a href="${root}/main.do?act=mvsearchmember" accesskey="4" title="">회원정보검색</a></li>
-            <li><a href="${root}/main.do?act=aptlist&pg=1&key=&word=" accesskey="5" title="">전체아파트목록</a></li>
+            <li class="current_page_item"><a href="${root}/" accesskey="1" title="">HomePage</a></li>
+            <li><a href="${root}/find?key=&value=" accesskey="4" title="">회원정보검색</a></li>
+            <li><a href="${root}/aptlist?pg=1&key=&word=" accesskey="5" title="">전체아파트목록</a></li>
          </ul>
       </div>
 </div>

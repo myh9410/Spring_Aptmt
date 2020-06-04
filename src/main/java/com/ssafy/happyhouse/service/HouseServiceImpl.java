@@ -3,14 +3,14 @@ package com.ssafy.happyhouse.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import com.ssafy.happyhouse.dao.HouseDao;
 import com.ssafy.happyhouse.dao.HouseDaoImpl;
 import com.ssafy.happyhouse.dto.HouseDeal;
 import com.ssafy.happyhouse.util.PageNavigation;
 
-@Repository
+@Service
 public class HouseServiceImpl implements HouseService {
 	
 	@Autowired

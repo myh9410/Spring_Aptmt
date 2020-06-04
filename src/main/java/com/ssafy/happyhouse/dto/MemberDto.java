@@ -1,7 +1,6 @@
 package com.ssafy.happyhouse.dto;
 
 public class MemberDto {
-
 	private String userid;
 	private String username;
 	private String userpwd;

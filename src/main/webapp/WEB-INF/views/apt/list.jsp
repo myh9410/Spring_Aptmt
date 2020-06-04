@@ -55,12 +55,12 @@
 <div id="menu-wrapper">
       <div id="menu">
          <ul>
-            <li class="current_page_item"><a href="${root}/index.jsp" accesskey="1" title="">HomePage</a></li>
+            <li class="current_page_item"><a href="${root}/" accesskey="1" title="">HomePage</a></li>
             <c:if test="${userinfo != null}">
-            <li><a href="${root}/main.do?act=logout" accesskey="2" title="">로그아웃</a></li>
+            <li><a href="${root}/logout" accesskey="2" title="">로그아웃</a></li>
             </c:if>
-            <li><a href="${root}/main.do?act=mvmodify" accesskey="3" title="">회원정보수정</a></li>
-            <li><a href="${root}/main.do?act=mvsearchmember" accesskey="4" title="">회원정보검색</a></li>
+             <li><a href="${root}/update" accesskey="3" title="">회원정보수정</a></li>
+            <li><a href="${root}/find?key=&value=" accesskey="4" title="">회원정보검색</a></li>
             <li><a href="${root}/aptlist?pg=1&key=&word=" accesskey="5" title="">전체아파트목록</a></li>
          </ul>
 	</div>

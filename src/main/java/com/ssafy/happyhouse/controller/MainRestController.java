@@ -42,11 +42,65 @@ public class MainRestController {
 	FindMemService findMemService;
 	@Autowired
 	LoginService loginService;
+	@Autowired
+	JoinService joinService;
+
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView home() {
 		return new ModelAndView("index");
 	}
+	@RequestMapping(value = "/mvjoin", method = RequestMethod.GET)
+	public ModelAndView mvjoion() {
+		return new ModelAndView("user/join");
+	}
+	@RequestMapping(value = "/join", method=RequestMethod.POST)
+	public ResponseEntity<MemberDto> join(@RequestBody MemberDto dto) throws Exception{
+		int result = joinService.join(dto);
+		if (result == 1) {
+			return new ResponseEntity<MemberDto>(HttpStatus.OK);			
+		} else {
+			return new ResponseEntity<MemberDto>(HttpStatus.BAD_REQUEST);
+		}
+	} 
+	
+	@RequestMapping(value = "/mvfindpwd", method = RequestMethod.GET)
+	public ModelAndView mvfindpwd() {
+		return new ModelAndView("user/findpwd");
+	}
+	
+	@RequestMapping(value = "/findpwdsuccess", method = RequestMethod.GET)
+	public ModelAndView mvfindpwdsuccess() {
+		return new ModelAndView("user/findpwdsuccess");
+	}
+	
+	@RequestMapping(value = "/findpwd", method = RequestMethod.POST)
+	public ResponseEntity<MemberDto> findpwd(@RequestBody MemberDto memberDto, HttpServletRequest request) throws Exception {
+		MemberDto m = loginService.findpwd(memberDto);
+		if (m != null) {
+			HttpSession session = request.getSession();
+			session.setAttribute("reqpassword", m.getUserpwd());
+			return new ResponseEntity<MemberDto>(HttpStatus.OK);
+		} else {
+			return new ResponseEntity<MemberDto>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@RequestMapping(value = "/mvdeleteInfo", method = RequestMethod.GET)
+	public ModelAndView mvdeleteInfo() {
+		return new ModelAndView("user/deleteInfo");
+	}
+	
+	@RequestMapping(value = "/deleteInfo/{pwd}", method=RequestMethod.POST)
+	public ModelAndView deleteInfo(@PathVariable("pwd") String pwd,HttpServletRequest request) throws Exception{
+		loginService.deleteInfo(pwd);
+		HttpSession session = request.getSession();
+		session.removeAttribute("userinfo");
+		
+		ModelAndView mav = new ModelAndView("index");
+		return mav;
+	} 
+
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView login(@RequestParam String userid, @RequestParam String userpwd, HttpServletRequest request) throws Exception {
@@ -90,7 +144,27 @@ public class MainRestController {
 		ModelAndView mav = new ModelAndView("user/searchmember");
 		return mav;
 	} 
-
+	
+	@RequestMapping(value = "/update", method=RequestMethod.GET)
+	public ModelAndView mvupdate() throws Exception{
+		return new ModelAndView("user/modify");
+	} 
+	
+	@RequestMapping(value = "/modify", method=RequestMethod.POST)
+	public ResponseEntity<MemberDto> modify(@RequestBody MemberDto dto,HttpServletRequest request) throws Exception{
+		HttpSession session = request.getSession();
+		MemberDto tmp = (MemberDto) session.getAttribute("userinfo");
+		dto.setUserid(tmp.getUserid());
+		String originalid = tmp.getUserid();
+		int result = joinService.update(dto);
+		if (result == 1) {
+			return new ResponseEntity<MemberDto>(HttpStatus.OK);
+		} else {
+			return new ResponseEntity<MemberDto>(HttpStatus.BAD_REQUEST);
+		}
+	} 
+	
+	
 	@DeleteMapping("/{userpwd}")
 	public String deleteInfo(@PathVariable("userpwd") String userpwd) throws Exception {
 		if(loginService.deleteInfo(userpwd)==1)return "success";

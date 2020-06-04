@@ -9,7 +9,7 @@ public interface LoginDao {
 
 	public MemberDto login(String userid, String userpwd) throws SQLException;
 
-	public MemberDto findpwd(String userid, String username, String email) throws SQLException;
+	public MemberDto findpwd(MemberDto memberDto) throws SQLException;
 
 	public int deleteInfo(String userpwd) throws SQLException;
 	

@@ -13,15 +13,15 @@
 
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" />
 <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" />
-<link href="../css/default.css" rel="stylesheet" type="text/css" media="all" />
-<link href="../css/fonts.css" rel="stylesheet" type="text/css" media="all" />
+<link href="css/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="css/fonts.css" rel="stylesheet" type="text/css" media="all" />
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-	   $("#registerBtn").click(function() {
+	   $("#registerBtn").click(function(){
 	       var pw = $("#userpwd").val();
 	       var num = pw.search(/[0-9]/g);
 	       var eng = pw.search(/[a-z]/ig);
@@ -49,18 +49,34 @@ $(document).ready(function() {
 	           alert("영문,숫자, 특수문자 중 2가지 이상을 혼합하여 입력해주세요.");
 	           return false;
 	      }else {
-	         alert("회원가입 완료!")
-	         $("#memberform").attr("action", "${root}/main.do?act=join").submit();
+	    	 var email = $("#memberform input[name=emailid]").val()+"@"+$("#memberform select[name=emaildomain]").val();
+	    	 var address = $("#memberform input[name=address]").val()+" "+$("#memberform input[name=address_detail]").val();
+	    	 $.ajax({
+	    	    	type:'POST',
+	    	        url:'${root}/join',
+	    	        headers:{"Content-Type":"application/json"},
+	    			data: JSON.stringify({				  
+	    				username: $("#memberform input[name=username]").val(),
+	    				userid: $("#memberform input[name=userid]").val(),
+	    				userpwd: $("#memberform input[name=userpwd]").val(),
+	    				email: email,
+	    				address: address
+	    			}),
+	    	        success:function(data){
+	    	        	alert("회원가입 완료!")
+	    	            window.location.href="${root}/";
+	    	        },
+	    	        error:function(data){
+	    	        	alert("회원가입 실패!");
+	    		        window.location.href="${root}/";
+	    		    }
+	    	 });
 	      }
 	   });
 	   $('#zipcode').focusin(function() {
 	      $('#zipModal').modal();
 	   });
 	});
-
-function join() {
-   document.location.href = "${root}/main.do?act=join";
-}
 </script>
 </head>
 <body>
@@ -77,9 +93,9 @@ function join() {
 <div id="menu-wrapper">
       <div id="menu">
          <ul>
-            <li class="current_page_item"><a href="${root}/index.jsp" accesskey="1" title="">HomePage</a></li>
-            <li><a href="${root}/main.do?act=mvsearchmember" accesskey="4" title="">회원정보검색</a></li>
-            <li><a href="${root}/main.do?act=aptlist&pg=1&key=&word=" accesskey="5" title="">전체아파트목록</a></li>
+            <li class="current_page_item"><a href="${root}/" accesskey="1" title="">HomePage</a></li>
+            <li><a href="${root}/find?key=&value=" accesskey="4" title="">회원정보검색</a></li>
+            <li><a href="${root}/aptlist?pg=1&key=&word=" accesskey="5" title="">전체아파트목록</a></li>
          </ul>
       </div>
 </div>

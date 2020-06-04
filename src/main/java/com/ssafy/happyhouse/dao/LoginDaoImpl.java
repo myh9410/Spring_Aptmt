@@ -26,8 +26,8 @@ public class LoginDaoImpl implements LoginDao {
 	}
 
 	@Override
-	public MemberDto findpwd(String userid, String username, String email) throws SQLException {
-		return sqlSession.selectOne("query.findpwd",userid);
+	public MemberDto findpwd(MemberDto memberDto) throws SQLException {
+		return sqlSession.selectOne("query.findpwd",memberDto);
 	}
 
 	@Override

@@ -18,32 +18,31 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 <script type="text/javascript">
-$(document).ready(function() {
-   $("#registerBtn").click(function() {
-      if($("#username").val() == "") {
-         alert("이름 입력!!!");
-         return;
-      } else if($("#userid").val() == "") {
-         alert("아이디 입력!!!");
-         return;
-      } else if($("#userpwd").val() == "") {
-         alert("비밀번호 입력!!!");
-         return;
-      } else {
-         alert("수정 완료!")
-         $("#memberform").attr("action", "${root}/main.do?act=modify").submit();
-      }
-   });
-   $('#zipcode').focusin(function() {
-      $('#zipModal').modal();
-   });
-});
-
-function modfiy() {
-   document.location.href = "${root}/main.do?act=modify";
+function modify() {
+	var email = $("#memberform input[name=emailid]").val()+"@"+$("#memberform select[name=emaildomain]").val();
+	var address = $("#memberform input[name=address]").val()+" "+$("#memberform input[name=address_detail]").val();
+	$.ajax({
+    	type:'POST',
+        url:'${root}/modify',
+        headers:{"Content-Type":"application/json"},
+		data: JSON.stringify({				  
+			username: $("#memberform input[name=username]").val(),
+			userpwd: $("#memberform input[name=userpwd]").val(),
+			email: email,
+			address: address
+		}),
+        success:function(data){
+        	alert("정보 수정 완료!")
+            window.location.href="${root}/";
+        },
+        error:function(data){
+        	alert("수정 실패!");
+	        window.location.href="${root}/";
+	    }
+    });
 }
 function cancel() {
-   document.location.href = "${root}/index.jsp";
+   document.location.href = "${root}/";
 }
 </script>
 </head>
@@ -61,11 +60,11 @@ function cancel() {
 <div id="menu-wrapper">
       <div id="menu">
          <ul>
-            <li class="current_page_item"><a href="${root}/index.jsp" accesskey="1" title="">HomePage</a></li>
-            <li><a href="${root}/main.do?act=logout" accesskey="2" title="">로그아웃</a></li>
-            <li><a href="${root}/main.do?act=mvmodify" accesskey="3" title="">회원정보수정</a></li>
-            <li><a href="${root}/main.do?act=mvsearchmember" accesskey="4" title="">회원정보검색</a></li>
-            <li><a href="${root}/main.do?act=aptlist&pg=1&key=&word=" accesskey="5" title="">전체아파트목록</a></li>
+            <li class="current_page_item"><a href="${root}/" accesskey="1" title="">HomePage</a></li>
+            <li><a href="${root}/logout" accesskey="2" title="">로그아웃</a></li>
+             <li><a href="${root}/update" accesskey="3" title="">회원정보수정</a></li>
+            <li><a href="${root}/find?key=&value=" accesskey="4" title="">회원정보검색</a></li>
+            <li><a href="${root}/aptlist?pg=1&key=&word=" accesskey="5" title="">전체아파트목록</a></li>
          </ul>
    </div>
 </div>
@@ -78,10 +77,6 @@ function cancel() {
                <div class="form-group" align="left">
                   <label for="name">이름</label>
                   <input type="text" class="form-control" id="username" name="username" placeholder="" value="${userinfo.username}">
-               </div>
-               <div class="form-group" align="left">
-                  <label for="">아이디</label>
-                  <input type="text" class="form-control" id="userid" name="userid" placeholder="" value="${userinfo.userid}">
                </div>
                <div class="form-group" align="left">
                   <label for="">비밀번호</label>
