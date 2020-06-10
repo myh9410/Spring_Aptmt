@@ -4,6 +4,7 @@
 <configuration>
 	<mappers>
 		<mapper resource="mappers/query.xml" />
+		<mapper resource="mappers/qna.xml" />
 	</mappers>
 </configuration>
 

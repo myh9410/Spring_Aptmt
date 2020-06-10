@@ -164,7 +164,6 @@ public class MainRestController {
 		}
 	} 
 	
-	
 	@DeleteMapping("/{userpwd}")
 	public String deleteInfo(@PathVariable("userpwd") String userpwd) throws Exception {
 		if(loginService.deleteInfo(userpwd)==1)return "success";
