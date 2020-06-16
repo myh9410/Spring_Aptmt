@@ -13,8 +13,8 @@
 
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" />
 <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" />
-<link href="css/default.css" rel="stylesheet" type="text/css" media="all" />
-<link href="css/fonts.css" rel="stylesheet" type="text/css" media="all" />
+<link href="static/css/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="static/css/fonts.css" rel="stylesheet" type="text/css" media="all" />
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
@@ -40,17 +40,17 @@ $(document).ready(function() {
 	         alert("비밀번호 확인!!!");
 	         return;
 	      }else if(pw.length < 8 || pw.length > 10){
-	           alert("8자리 ~ 10자리 이내로 입력해주세요.");
+	           alert("비밀번호는 8자리 ~ 10자리 이내로 입력해주세요.");
 	           return false;
 	      }else if(pw.search(/\s/) != -1){
 	           alert("비밀번호는 공백 없이 입력해주세요.");
 	           return false;
 	      }else if( (num < 0 && eng < 0) || (eng < 0 && spe < 0) || (spe < 0 && num < 0) ){
-	           alert("영문,숫자, 특수문자 중 2가지 이상을 혼합하여 입력해주세요.");
+	           alert("비밀번호는 영문,숫자, 특수문자 중 2가지 이상을 혼합하여 입력해주세요.");
 	           return false;
 	      }else {
 	    	 var email = $("#memberform input[name=emailid]").val()+"@"+$("#memberform select[name=emaildomain]").val();
-	    	 var address = $("#memberform input[name=address]").val()+" "+$("#memberform input[name=address_detail]").val();
+	    	 var address = $("#memberform input[name=address]").val()+"^^"+$("#memberform input[name=address_detail]").val();
 	    	 $.ajax({
 	    	    	type:'POST',
 	    	        url:'${root}/join',
@@ -84,7 +84,7 @@ $(document).ready(function() {
    <div id="header" class="container">
       <div id="logo">
          <span class="icon icon-home"></span>
-         <h1><a href="${root}/user/join.jsp">HappyHouse - 회원가입</a></h1>
+         <h1><a href="${root}/user/mvjoin">HappyHouse - 회원가입</a></h1>
          
       </div>
       <div id="triangle-up"></div>

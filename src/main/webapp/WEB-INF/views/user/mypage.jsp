@@ -6,7 +6,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>SSAFY - HappyHouse</title>
+<title>Insert title here</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 <meta name="keywords" content="" />
@@ -21,33 +21,54 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b80b37a7379bee362585cf8b7603b61a"></script>
 <script>
-	function deleteIn() {
-		location.href="${root}/mvdeleteInfo";
+	window.onload=function(){
+		let fav = localStorage.getItem("fav");
+		let favList = JSON.parse(fav);
+		favList.forEach(function(element){
+			var myPick = element.split('※');
+			var no = myPick[0].trim();
+			var dong = myPick[1].trim();
+			var AptName = myPick[2].trim();
+			var dealAmount = myPick[4].trim();
+			var buildYear = myPick[5].trim();
+			var dealDate = myPick[6].trim()+"."+myPick[7].trim()+"."+myPick[8].trim();
+			document.getElementById("favTable").innerHTML += '<td>'+no+'</td>' + '<td>'+dong+'</td>' + '<td>'+AptName+'</td>' + '<td>'+dealAmount+'</td>' + 
+			'<td>'+buildYear+'</td>' + '<td>'+dealDate+'</td>' + 
+			'<td><button type="button" class="btn btn-warning" onclick="removeFav('+no+')">삭제</button></td>';
+		})
 	}
-
+	function removeFav(no){
+		var tmp = [];
+		let fav = localStorage.getItem("fav");
+		let favList = JSON.parse(fav);
+		favList.forEach(function(element){
+			var myPick = element.split('※');
+			var noInList = myPick[0].trim();
+			if (noInList != no){
+				tmp.push(element);
+			}
+		})
+		let data = JSON.stringify(tmp);
+		localStorage.setItem("fav",data);
+		alert("즐겨찾기 목록에서 삭제되었습니다!");
+		location.href="${root}/mypage";
+	}
 </script>
 </head>
 <body>
-<div id="header-wrapper">
-   <div id="header" class="container">
-      <div id="logo">
-         <span class="icon icon-home"></span>
-         <h1><a href="${root}/">HappyHouse</a></h1>
-         
-      </div>
-      <div id="triangle-up"></div>
-   </div>
-</div>
+	<div id="header-wrapper">
+		<div id="header" class="container">
+			<div id="logo">
+				<span class="icon icon-home"></span>
+				<h1>
+					<a href="${root}/mypage">HappyHouse-마이페이지</a>
+				</h1>
 
-<div align="center">
-	<c:if test="${userinfo eq null}"> <!-- if (memberDto == null) -->
-      <h3>${msg}</h3>
-      <%@ include file="/WEB-INF/views/user/login.jsp" %>
-	</c:if> <!-- if문 종료 -->
-	<c:if test="${userinfo != null}"> <!-- else문이 없으므로 조건 적어줘야됨 -->
-	<!-- 로그인 여부는 session을 이용하여 판단 -->
+			</div>
+			<div id="triangle-up"></div>
+		</div>
+	</div>
 	<div id="menu-wrapper">
       <div id="menu">
          <ul>
@@ -63,22 +84,24 @@
 	</div>
 	<div id="wrapper">
 		<div id="featured-wrapper">
-   			<strong>${userinfo.username}(${userinfo.userid})</strong>님 <br>환영합니다. <!-- el로 표현하면 html에 가까워짐  -->
+			<table class="table table-hover" id="favTable">
+				<tr>
+					<th>번호</th>
+					<th>동</th>
+					<th>아파트 이름</th>
+					<th>거래 가격</th>
+					<th>건축 년도</th>
+					<th>거래 일자</th>
+					<th>목록에서 삭제</th>
+				</tr>
+			</table>
 		</div>
 	</div>
-	<table class="table table-borderless">
-	  			<tr>
-			  		<td align="right">
-			  			<button type="button" class="btn btn-dark" onclick="javascript:deleteIn();">회원탈퇴</button>
-			  		</td>
-		  		</tr>
-	  		</table>
 	<div id="stamp" class="container">
-		<div class="hexagon"><span class="icon icon-user"></span></div>
+		<div class="hexagon">
+			<span class="icon icon-user"></span>
+		</div>
 	</div>
 	<div id="copyright" class="container"></div>
-
-   </c:if>
-</div>
 </body>
 </html>

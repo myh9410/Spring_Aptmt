@@ -3,10 +3,11 @@ package com.ssafy.happyhouse.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.happyhouse.dao.HouseDao;
-import com.ssafy.happyhouse.dao.HouseDaoImpl;
 import com.ssafy.happyhouse.dto.HouseDeal;
 import com.ssafy.happyhouse.util.PageNavigation;
 
@@ -14,7 +15,7 @@ import com.ssafy.happyhouse.util.PageNavigation;
 public class HouseServiceImpl implements HouseService {
 	
 	@Autowired
-	private HouseDao dao;
+	HouseDao housedao;
 	
 	@Override
 	public HouseDeal search(int no) throws Exception {
@@ -26,7 +27,7 @@ public class HouseServiceImpl implements HouseService {
 	public List<HouseDeal> listAptmt(int currentPage, int sizePerPage, String key, String word) throws Exception {
 		key = key == null ? "" : key;
 		word = word == null ? "" : word;
-		return dao.listAptmt(currentPage, sizePerPage, key, word);
+		return housedao.listAptmt(currentPage, sizePerPage, key, word);
 	}
 
 	@Override
@@ -35,7 +36,7 @@ public class HouseServiceImpl implements HouseService {
 		int naviSize = 10;//페이지 갯수
 		pageNavigation.setCurrentPage(currentPage);
 		pageNavigation.setNaviSize(naviSize);
-		int totalCount = dao.getTotalCount(key, word);//총 게시글 수
+		int totalCount = housedao.getTotalCount(key, word);//총 게시글 수
 		pageNavigation.setTotalCount(totalCount);
 		int totalPageCount = (totalCount - 1)/ sizePerPage +1;//총 페이지 수
 		pageNavigation.setTotalPageCount(totalPageCount);
@@ -46,5 +47,4 @@ public class HouseServiceImpl implements HouseService {
 		pageNavigation.makeNavigator();
 		return pageNavigation;
 	}
-
 }

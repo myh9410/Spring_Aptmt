@@ -4,17 +4,17 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="query"> <!-- mybatis는 namespace필수!! -->
 	<select id="listAptmt" parameterType="com.ssafy.happyhouse.dto.AptInfoPasser" resultType="com.ssafy.happyhouse.dto.HouseDeal">
-    	select * from housedealforaptdeal 
+    	select deal.*,info.lat as lat,info.lng as lng from housedealforaptdeal as deal, houseinfo as info where deal.AptName = info.AptName and deal.jibun = info.jibun and deal.code = info.code and deal.buildYear = info.buildYear and trim(info.dong) = trim(deal.dong)  
     	<if test="word != null">
     		<choose>
     			<when test="key == 'dong'">
-    				where dong like CONCAT('%',#{word},'%') 
+    				and deal.dong like CONCAT('%',#{word},'%') 
     			</when>
     			<when test="key == 'AptName'">
-    				where AptName like CONCAT('%',#{word},'%')  
+    				and deal.AptName like CONCAT('%',#{word},'%')  
     			</when>
     			<otherwise>
-    				where #{key} = #{word}
+    				and #{key} = #{word}
     			</otherwise>
     		</choose>
     		order by no asc limit #{currentPage}, #{sizePerPage}
@@ -22,38 +22,23 @@
     </select>
     
     <select id="totalCount" parameterType="hashMap" resultType="int">
-    	select count(no) from housedealforaptdeal 
+    	select count(*) from housedealforaptdeal as deal, houseinfo as info where deal.AptName = info.AptName and deal.jibun = info.jibun and deal.code = info.code and deal.buildYear = info.buildYear and trim(info.dong) = trim(deal.dong)  
     	<if test="word != null">
     		<choose>
     			<when test="key == 'dong'">
-    				where dong like CONCAT('%',#{word},'%') 
+    				and deal.dong like CONCAT('%',#{word},'%') 
     			</when>
     			<when test="key == 'AptName'">
-    				where AptName like CONCAT('%',#{word},'%')  
+    				and deal.AptName like CONCAT('%',#{word},'%')  
     			</when>
     			<otherwise>
-    				where #{key} = #{word}
+    				and #{key} = #{word}
     			</otherwise>
     		</choose>
     	</if>
     </select>
     
-    <select id="listAptLoc" parameterType="hashMap" resultType="com.ssafy.happyhouse.dto.HouseLoc">
-    	select lat,lng from houseinfo 
-    	<if test="word != null">
-    		<choose>
-    			<when test="key == 'dong'">
-    				where dong like CONCAT('%',#{word},'%') 
-    			</when>
-    			<when test="key == 'AptName'">
-    				where AptName like CONCAT('%',#{word},'%') 
-    			</when>
-    			<otherwise>
-    				where #{key} = #{word}
-    			</otherwise>
-    		</choose>
-    	</if>
-    </select>
+    <!-- 사용자 -->
     
     <delete id="deleteInfo">
     	delete from ssafy_member where userpwd = #{userpwd}
@@ -84,7 +69,6 @@
 	<select id="find" parameterType="hashMap" resultType="com.ssafy.happyhouse.dto.MemberDto">
     		select userid,username,email 
     		from ssafy_member 
-    	
     	<if test="value !=null">
     		<choose>
     			<when test="key == 'username'">
@@ -94,7 +78,7 @@
     				where userid like CONCAT('%',#{value},'%')  
     			</when>
     			<otherwise>
-    				where #{key} = #{word}
+    				where #{key} = #{value}
     			</otherwise>
     		</choose>
     		order by joindate desc

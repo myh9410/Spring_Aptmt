@@ -21,12 +21,6 @@ public class HouseDaoImpl implements HouseDao {
 	SqlSession sqlSession;
 
 	@Override
-	public HouseDeal search(int no) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public List<HouseDeal> listAptmt(int currentPage, int sizePerPage, String key, String word) throws Exception {
 		AptInfoPasser aip = new AptInfoPasser((currentPage-1)*sizePerPage, sizePerPage, key, word);
 		//, bounds

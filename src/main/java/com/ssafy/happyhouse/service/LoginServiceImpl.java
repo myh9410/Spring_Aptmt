@@ -14,10 +14,6 @@ public class LoginServiceImpl implements LoginService {
 	@Autowired
 	LoginDao loginDao;
 	
-	public LoginServiceImpl() {
-		loginDao = new LoginDaoImpl();
-	}
-	
 	@Override
 	public MemberDto login(String userid, String userpwd) throws Exception {
 		if (userid == null || userpwd == null)

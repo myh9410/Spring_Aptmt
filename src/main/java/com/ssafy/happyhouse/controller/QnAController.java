@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.ssafy.happyhouse.dto.QnA;
 import com.ssafy.happyhouse.service.QnAService;
 
@@ -33,8 +32,8 @@ public class QnAController {
 	private static final String FAIL = "fail";
 
 	@Autowired
-	private QnAService qnaService;
-
+	QnAService qnaService;
+	
     @ApiOperation(value = "모든 질문게시판 정보를 반환한다.", response = List.class)
 	@GetMapping
 	public ResponseEntity<List<QnA>> retrieveQnA() throws Exception {
@@ -42,42 +41,43 @@ public class QnAController {
 		return new ResponseEntity<List<QnA>>(qnaService.retrieveQnA(), HttpStatus.OK);
 	}
 
-//    @ApiOperation(value = "글번호에 해당하는 게시글의 정보를 반환한다.", response = Board.class)    
-//	@GetMapping("{no}")
-//	public ResponseEntity<Board> detailBoard(@PathVariable int no) {
-//		logger.debug("detailBoard - 호출");
-//		return new ResponseEntity<Board>(boardService.detailBoard(no), HttpStatus.OK);
-//	}
-//
-//    @ApiOperation(value = "새로운 게시글 정보를 입력한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-//	@PostMapping
-//	public ResponseEntity<String> writeBoard(@RequestBody Board board) {
-//		logger.debug("writeBoard - 호출");
-//		if (boardService.writeBoard(board)) {
-//			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
-//		}
-//		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
-//	}
-//
-//    @ApiOperation(value = "글번호에 해당하는 게시글의 정보를 수정한다. 그리고 DB수정 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-//	@PutMapping("{no}")
-//	public ResponseEntity<String> updateBoard(@RequestBody Board board) {
-//		logger.debug("updateBoard - 호출");
-//		logger.debug("" + board);
-//		
-//		if (boardService.updateBoard(board)) {
-//			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
-//		}
-//		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
-//	}
-//
-//    @ApiOperation(value = "글번호에 해당하는 게시글의 정보를 삭제한다. 그리고 DB삭제 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-//	@DeleteMapping("{qna_no}")
-//	public ResponseEntity<String> deleteQnA(@PathVariable int qna_no) {
-//		logger.debug("deleteQnA - 호출");
-//		if (qnaService.deleteBoard(no)) {
-//			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
-//		}
-//		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
-//	}
+    @ApiOperation(value = "질문 번호에 해당하는 질문의 정보를 반환한다.", response = QnA.class)    
+	@GetMapping("{qna_no}")
+	public ResponseEntity<QnA> detailQnA(@PathVariable int qna_no) {
+		logger.debug("detailBoard - 호출");
+		return new ResponseEntity<QnA>(qnaService.selectQnAByNo(qna_no), HttpStatus.OK);
+	}
+
+    @ApiOperation(value = "새로운 질문을 입력한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@PostMapping
+	public ResponseEntity<String> writeQnA(@RequestBody QnA qna) {
+		logger.debug("writeBoard - 호출");
+		if (qnaService.writeQnA(qna)==1) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+
+    @ApiOperation(value = "질문 번호에 해당하는 질문의 정보를 수정한다. 그리고 DB수정 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@PutMapping("{qna_no}")
+	public ResponseEntity<String> updateQnA(@RequestBody QnA qna) {
+		logger.debug("updateQnA - 호출");
+		logger.debug("" + qna);
+		
+		if (qnaService.updateQnA(qna)==1) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+
+    @ApiOperation(value = "질문 번호에 해당하는 질문을 삭제한다. 그리고 DB삭제 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@DeleteMapping("{qna_no}")
+	public ResponseEntity<String> deleteBoard(@PathVariable int qna_no) {
+		logger.debug("deleteQnA - 호출");
+		if (qnaService.deleteQnA(qna_no)==1) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);			
+		}
+	}
 }

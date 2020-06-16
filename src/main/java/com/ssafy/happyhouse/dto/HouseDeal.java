@@ -160,10 +160,8 @@ public class HouseDeal implements Comparable<HouseDeal>{
 
 	@Override
 	public String toString() {
-		return "HouseDeal [no=" + no + ", dong=" + dong + ", AptName=" + AptName + ", code=" + code + ", dealAmount="
-				+ dealAmount + ", buildYear=" + buildYear + ", dealYear=" + dealYear + ", dealMonth=" + dealMonth
-				+ ", dealDay=" + dealDay + ", area=" + area + ", floor=" + floor + ", jibun=" + jibun + ", type=" + type
-				+ ", rentMoney=" + rentMoney + "]";
+		return no + "※" + dong + "※" + AptName + "※" + code + "※" + dealAmount + "※" + buildYear + "※" + dealYear + "※" + dealMonth
+				+ "※" + dealDay + "※" + area + "※" + floor + "※" + jibun + "※" + type + "※" + rentMoney + "※" + lat + "※" + lng;
 	}
 	
 }

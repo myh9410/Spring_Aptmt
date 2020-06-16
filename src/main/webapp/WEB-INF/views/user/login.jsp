@@ -2,9 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set> <!-- root = requset.getContextPath() -->
-<c:if test="${cookie.ssafy_id.value}">
-	<c:set var="svid" value="${cookie.ssafy_id.value}"/>
-	<c:set var="ckid" value="checked"/>
+<c:if test="${cookie.ssafy_id.value ne null}">
+	<c:set var="saveid" value="${cookie.ssafy_id.value}"/>
+	<c:set var="idck" value=" checked=\"checked\""/>
 </c:if>
 <script type="text/javascript">
 function login() {
@@ -23,7 +23,11 @@ function login() {
 	        success:function(data){
 	        	alert($("#loginform input[name=userid]").val()+ " 로그인 성공!");
 	            window.location.href="${root}/";
-	         }
+	         },
+ 	        error:function(data){
+	        	alert("아이디 혹은 비밀번호를 다시 확인해주세요!");
+		        window.location.href="${root}/";
+		    }
 	    });
 	}
 }
@@ -55,7 +59,7 @@ function mvfindpwd() {
 			<input type="hidden" name="act" value="login">
 				<div class="form-group" align="left">
 					<label for="">아이디</label>
-					<input type="text" class="form-control" id="userid" name="userid" placeholder="" value="${svid}">
+					<input type="text" class="form-control" id="userid" name="userid" placeholder="" value="${saveid}">
 				</div>
 				<div class="form-group" align="left">
 					<label for="">비밀번호</label>
@@ -63,7 +67,7 @@ function mvfindpwd() {
 				</div>
 				<div class="form-group form-check" align="right">
 			    	<label class="form-check-label">
-			      	<input class="form-check-input" type="checkbox" id="idsave" name="idsave" value="saveok"${ckid}> 아이디저장
+			      		<input class="form-check-input" type="checkbox" id="idsave" name="idsave" value="saveok"${idck}> 아이디저장 
 			    	</label>
 				</div>
 				<div class="form-group" align="center">

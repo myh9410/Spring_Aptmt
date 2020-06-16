@@ -1,7 +1,9 @@
 package com.ssafy.happyhouse.dao;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +20,10 @@ public class MemberDaoImpl implements MemberDao {
 	
 	@Override
 	public List<MemberDto> find(String key, String value) throws SQLException {
-		// ??
-		List<MemberDto> list = sqlSession.selectList("query.find");
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("key", key);
+		map.put("value", value);
+		List<MemberDto> list = sqlSession.selectList("query.find",map);
 		return list;
 	}
 }

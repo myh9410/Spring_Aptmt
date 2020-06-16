@@ -11,8 +11,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" />
-<link href="css/default.css" rel="stylesheet" type="text/css" media="all" />
-<link href="css/fonts.css" rel="stylesheet" type="text/css" media="all" />
+<link href="static/css/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="static/css/fonts.css" rel="stylesheet" type="text/css" media="all" />
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
@@ -20,7 +20,7 @@
 <script type="text/javascript">
 function modify() {
 	var email = $("#memberform input[name=emailid]").val()+"@"+$("#memberform select[name=emaildomain]").val();
-	var address = $("#memberform input[name=address]").val()+" "+$("#memberform input[name=address_detail]").val();
+	var address = $("#memberform input[name=address]").val()+"^^"+$("#memberform input[name=address_detail]").val();
 	$.ajax({
     	type:'POST',
         url:'${root}/modify',
@@ -51,7 +51,7 @@ function cancel() {
    <div id="header" class="container">
       <div id="logo">
          <span class="icon icon-home"></span>
-         <h1><a href="${root}/index.jsp">HappyHouse<br>회원정보수정</a></h1>
+         <h1><a href="${root}/update">HappyHouse<br>회원정보수정</a></h1>
          
       </div>
       <div id="triangle-up"></div>
@@ -61,10 +61,14 @@ function cancel() {
       <div id="menu">
          <ul>
             <li class="current_page_item"><a href="${root}/" accesskey="1" title="">HomePage</a></li>
+            <c:if test="${userinfo != null}">
             <li><a href="${root}/logout" accesskey="2" title="">로그아웃</a></li>
-             <li><a href="${root}/update" accesskey="3" title="">회원정보수정</a></li>
-            <li><a href="${root}/find?key=&value=" accesskey="4" title="">회원정보검색</a></li>
-            <li><a href="${root}/aptlist?pg=1&key=&word=" accesskey="5" title="">전체아파트목록</a></li>
+            <li><a href="${root}/mvqna" accesskey="3" title="">QnA게시판</a></li>
+            <li><a href="${root}/mypage" accesskey="7" title="">마이페이지</a></li>
+            </c:if>
+            <li><a href="${root}/update" accesskey="4" title="">회원정보수정</a></li>
+            <li><a href="${root}/find?key=&value=" accesskey="5" title="">회원정보검색</a></li>
+            <li><a href="${root}/aptlist?pg=1&key=&word=" accesskey="6" title="">전체아파트목록</a></li>
          </ul>
    </div>
 </div>
@@ -104,9 +108,10 @@ function cancel() {
                   <div id="addressdiv" class="custom-control-inline">
                      <input type="text" class="form-control" id="zipcode" name="zipcode" placeholder="우편번호" size="7" maxlength="5" readonly="readonly">
                   </div>
-                  <c:forEach var="address" items="${fn:split(userinfo.address,'^^')}" varStatus="status">
-                     <c:if test="${status.first}"><c:set var="address1" >${address}</c:set></c:if>
-                     <c:if test="${status.last}"><c:set var="address2" >${address}</c:set></c:if>
+                  <c:set var="tmp" value="${fn:split(userinfo.address,'^^')}" />
+                  <c:forEach var="address_split" items="${tmp}" varStatus="status">
+                     <c:if test="${status.first}"><c:set var="address1" >${tmp[0]}</c:set></c:if>
+                     <c:if test="${status.last}"><c:set var="address2" >${tmp[1]}</c:set></c:if>
                   </c:forEach>
                   <input type="text" class="form-control" id="address" name="address" placeholder="" value="${address1}">
                   <input type="text" class="form-control" id="address_detail" name="address_detail" placeholder="" value="${address2}">

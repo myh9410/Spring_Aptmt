@@ -12,11 +12,10 @@
 <meta name="keywords" content="" />
 <meta name="description" content="" />
 
-<link rel="stylesheet type="text/css" href="css/index.css"/>
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" />
 <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" />
-<link href="css/default.css" rel="stylesheet" type="text/css" media="all" />
-<link href="css/fonts.css" rel="stylesheet" type="text/css" media="all" />
+<link href="static/css/default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="static/css/fonts.css" rel="stylesheet" type="text/css" media="all" />
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
@@ -31,8 +30,9 @@
 			if(document.getElementById("value").value == "") {
 				alert("모든 목록 조회!!");
 			}
-			document.getElementById("searchform").action = "${root}/main.do";
-			document.getElementById("searchform").submit();
+			var value = document.getElementById("value").value;
+			var key = document.getElementById("key").value;
+			location.href = "${root}/find?key="+key+"&value="+value;
 		}
 		</script>
 <title>HappyHouse - 회원 검색</title>
@@ -42,7 +42,7 @@
    <div id="header" class="container">
       <div id="logo">
          <span class="icon icon-home"></span>
-         <h1><a href="${root}/user/searchmember.jsp">HappyHouse - 회원 검색</a></h1>
+         <h1><a href="${root}/find?key=&value=">HappyHouse - 회원 검색</a></h1>
          
       </div>
       <div id="triangle-up"></div>
@@ -52,8 +52,13 @@
       <div id="menu">
          <ul>
             <li class="current_page_item"><a href="${root}/" accesskey="1" title="">HomePage</a></li>
-           <li><a href="${root}/find?key=&value=" accesskey="4" title="">회원정보검색</a></li>
-            <li><a href="${root}/main.do?act=aptlist&pg=1&key=&word=" accesskey="5" title="">전체아파트목록</a></li>
+            <c:if test="${userinfo != null}">
+            <li><a href="${root}/logout" accesskey="2" title="">로그아웃</a></li>
+            <li><a href="${root}/mvqna" accesskey="3" title="">QnA게시판</a></li>
+            <li><a href="${root}/mypage" accesskey="7" title="">마이페이지</a></li>
+            </c:if>
+           	<li><a href="${root}/find?key=&value=" accesskey="4" title="">회원정보검색</a></li>
+            <li><a href="${root}/aptlist?pg=1&key=&word=" accesskey="5" title="">전체아파트목록</a></li>
          </ul>
       </div>
 </div>
@@ -90,9 +95,6 @@
 		  <table class="table table-hover">
 		    <tbody>
 		      <tr class = "table-dark">
-		        <td>회원 이름 : ${user.username}</td>
-		      </tr>
-		      <tr>
 		        <td colspan="2">회원 아이디 : ${user.userid}</td>
 		      </tr>
 		      <tr>
